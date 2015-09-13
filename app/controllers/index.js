@@ -7,10 +7,9 @@
  *  Project : meansfw
  *  File : index
  *  Date : 9/13/15 11:40 AM
- *  Description :
+ *  Description : Simply export app controllers. Your controllers could be express middlewares or anything you want.
  *
  */
 'use strict';
-
 
 exports.SampleController = require("./sample");

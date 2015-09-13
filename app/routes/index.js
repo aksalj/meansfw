@@ -7,14 +7,15 @@
  *  Project : meansfw
  *  File : index
  *  Date : 9/13/15 12:33 PM
- *  Description :
+ *  Description : Array of all app routers.
  *
  */
 'use strict';
 
-
-
+/**
+ * Array of all app routers.
+ * @type {[{path: String, router: express.Router}]}
+ */
 exports = module.exports = [
-    // all routes go in this array
     require('./sample')
 ];

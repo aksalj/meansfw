@@ -11,27 +11,37 @@
  *
  */
 'use strict';
-var express = require("express");
+var conf = require("config");
+var fs = require("fs");
 var morgan = require('morgan');
-
+var debug = require('debug')('app');
+var express = require("express");
 var routes = require("./routes");
+
+var DEBUG = conf.get("debug");
 
 var app = express();
 
 // Express setup
+
+    // Logging
+if(DEBUG) { app.use(morgan('dev')); }
+else {
+    // In production, log access to file
+    var accessLogStream = fs.createWriteStream(process.cwd() + '/log/access.log', {flags: 'a'});
+    app.use(morgan('combined', {stream: accessLogStream}));
+}
+
+    // Templates
 app.set('view engine', 'ejs');
 app.set('views', 'app/views');
-app.use(morgan('dev'));
 
-
-// Setup Static
+    // Static files
 app.use(express.static('public'));
 
 // Setup Routes
 routes.forEach(function(route) {
     app.use(route.path, route.router);
 });
-
-
 
 exports = module.exports = app;

@@ -11,6 +11,7 @@
  *
  */
 'use strict';
+var debug = require('debug')('server');
 var fs = require('fs');
 var os = require('os');
 var cluster = require('cluster');
@@ -21,18 +22,17 @@ var http = require('http');
 
 
 /**
- *
- * @param expressApp
+ * Simple wrappler around express and mongoose
+ * @param app Object express app
  * @constructor
  */
-var Server = function (expressApp) {
+var Server = function (app) {
     var _self = this;
     _self.process = cluster.worker;
-    _self.app = expressApp;
-
+    _self.app = app;
 
     /**
-     *
+     * Connect to MongoDB
      * @param callback
      */
     this.connectDb = function (callback) {
@@ -54,15 +54,27 @@ var Server = function (expressApp) {
             }
         };
 
-        mongoose.connect(uri, options, cb);
+        process.on('SIGINT', function() {
+            mongoose.connection.close(function () {
+                console.log('Mongoose default connection disconnected through app termination');
+            });
+        });
+
+        mongoose.connect(uri, options, callback);
     };
 
     /**
-     *
+     * Start express app
      * @param callback
      */
     this.start = function (callback) {
 
+        /**
+         * Either start a HTTP or HTTPS server depending on the configuration
+         * @param cb
+         * @returns {*}
+         * @private
+         */
         var _startHttpServer = function (cb) {
             var port = conf.get("app.port");
             var host = conf.get("app.host");
@@ -100,6 +112,7 @@ var Server = function (expressApp) {
             server.listen(port, host, cb);
         };
 
+        // First connect to the DB, then start the HTTP(S) server.
         _self.connectDb(function (err) {
 
             if (err) {
