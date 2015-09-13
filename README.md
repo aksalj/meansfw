@@ -4,11 +4,12 @@
 Provide a production-ready minimalist MEAN project template.
 
 #### Usage
-This template assumes `nodejs` and `mongodb` are correctly installed.
+This template assumes `nodejs`, `bower` and `mongodb` are correctly installed.
 
 ```shell
-$ git clone https://github.com/aksalj/meansfw.git myApp
-$ atom myApp
+$ git clone https://github.com/aksalj/meansfw.git <myApp>
+$ cd <myApp>
+$ npm install && bower install
 ```
 
 #### Structure
