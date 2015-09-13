@@ -4,6 +4,7 @@
 Provide a production-ready minimalist MEAN project template.
 
 #### Usage
+This template assumes `nodejs` and `mongodb` are correctly installed.
 
 ```shell
 $ git clone https://github.com/aksalj/meansfw.git myApp
