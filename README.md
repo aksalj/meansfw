@@ -1,4 +1,4 @@
-#MEANSFW: MEAN project template
+#meansfw: MEAN project template
 
 #### Goal
 Provide a production-ready minimalist MEAN project template.
