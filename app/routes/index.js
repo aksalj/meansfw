@@ -11,3 +11,10 @@
  *
  */
 'use strict';
+
+
+
+exports = module.exports = [
+    // all routes go in this array
+    require('./sample')
+];

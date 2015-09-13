@@ -11,3 +11,6 @@
  *
  */
 'use strict';
+
+
+exports.SampleController = require("./sample");

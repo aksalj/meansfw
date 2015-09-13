@@ -11,3 +11,27 @@
  *
  */
 'use strict';
+var express = require("express");
+var morgan = require('morgan');
+
+var routes = require("./routes");
+
+var app = express();
+
+// Express setup
+app.set('view engine', 'ejs');
+app.set('views', 'app/views');
+app.use(morgan('dev'));
+
+
+// Setup Static
+app.use(express.static('public'));
+
+// Setup Routes
+routes.forEach(function(route) {
+    app.use(route.path, route.router);
+});
+
+
+
+exports = module.exports = app;

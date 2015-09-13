@@ -5,12 +5,12 @@
  *  Website: http://www.aksalj.me
  *
  *  Project : meansfw
- *  File : index
- *  Date : 9/13/15 11:40 AM
+ *  File : sample
+ *  Date : 9/13/15 2:23 PM
  *  Description :
  *
  */
 'use strict';
+var mongoose = require("mongoose");
 
-
-exports.Sample = require("./sample");
+exports = module.exports = mongoose.model('Cat', { name: String });

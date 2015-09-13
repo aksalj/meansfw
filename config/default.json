@@ -1,1 +1,21 @@
-{}
+{
+    "app": {
+        "host": "localhost",
+        "port": 3000,
+        "secure": false,
+        "credentials": {
+            "pfx": null,
+            "key": null,
+            "cert": null
+        }
+    },
+
+    "database":{
+        "host":"localhost",
+        "port":27017,
+        "name":"meanAPP",
+        "user": null,
+        "password": null,
+        "keepAlive": false
+    }
+}
