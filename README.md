@@ -3,6 +3,12 @@
 #### Goal
 Provide a production-ready minimalist MEAN project template.
 
+#### Usage
+
+```shell
+$ git clone https://github.com/aksalj/meansfw.git myApp
+$ atom myApp
+```
 
 #### Structure
 
