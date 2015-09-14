@@ -1,10 +1,17 @@
-#meansfw: MEAN project template
+# meansfw: MEAN project template
 
 #### Goal
 Provide a production-ready minimalist MEAN project template.
 
 #### Usage
-This template assumes `nodejs`, `bower` and `mongodb` are correctly installed.
+The template assumes `git`, `nodejs`, `bower` and `mongodb` are correctly installed.
+
+```shell
+$ npm install -g meansfw
+$ meansfw <myApp>
+```
+
+OR
 
 ```shell
 $ git clone https://github.com/aksalj/meansfw.git <myApp>
