@@ -1,35 +1,51 @@
 {
-  "name": "meansfw",
-  "version": "0.0.0",
-  "description": "MEAN Template",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/aksalj/meansfw.git"
-  },
-  "keywords": [
-    "mean",
-    "express",
-    "mongodb",
-    "api",
-    "app"
-  ],
-  "author": "Salama AB <aksalj@aksalj.me>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/aksalj/meansfw/issues"
-  },
-  "homepage": "https://github.com/aksalj/meansfw#readme",
-  "dependencies": {
-    "config": "^1.15.0",
-    "debug": "^2.2.0",
-    "ejs": "^2.3.3",
-    "express": "^4.13.3",
-    "mongoose": "^4.1.1",
-    "morgan": "^1.6.1"
-  }
+    "name": "meansfw",
+    "version": "0.0.1d",
+    "description": "MEAN Project Template Generator",
+    "main": "app/index.js",
+    "bin" : {
+        "meansfw" : "./bin/generator.js"
+    },
+    "preferGlobal": true,
+    "scripts": {
+        "start": "node server.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/aksalj/meansfw.git"
+    },
+    "files": [
+        "bin/generator.js"
+    ],
+    "keywords": [
+        "mean",
+        "mongo",
+        "mongodb",
+        "express",
+        "expressjs",
+        "angular",
+        "angularjs",
+        "node",
+        "nodejs",
+        "template",
+        "generator"
+    ],
+    "author": "Salama AB <aksalj@aksalj.me>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/aksalj/meansfw/issues"
+    },
+    "homepage": "https://github.com/aksalj/meansfw#readme",
+    "dependencies": {
+        "config": "^1.15.0",
+        "debug": "^2.2.0",
+        "ejs": "^2.3.3",
+        "express": "^4.13.3",
+        "mongoose": "^4.1.1",
+        "morgan": "^1.6.1",
+
+        "cli": "^0.10.0",
+        "fs-extra": "^0.24.0"
+    }
 }
