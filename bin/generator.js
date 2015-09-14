@@ -33,9 +33,14 @@ function updateTemplate(name, dest) {
     var pkgJSON = fs.readJsonSync(path.join(dest, "package.json"));
     cli.progress(0.3);
     pkgJSON.name = name;
+    pkgJSON.version = "0.0.0";
     pkgJSON.description = "MEAN app";
+    pkgJSON.keywords = [name, "meansfw"];
 
-        // Delete generator dependencies
+        // Delete generator dependencies & stuff
+    delete pkgJSON.bin;
+    delete pkgJSON.files;
+    delete pkgJSON.preferGlobal;
     generatorDependencies.forEach(function(dep) {
         if(pkgJSON.dependencies.hasOwnProperty(dep)) {
             delete pkgJSON.dependencies[dep];
