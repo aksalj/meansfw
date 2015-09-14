@@ -11,14 +11,6 @@ $ npm install -g meansfw
 $ meansfw <myApp>
 ```
 
-OR
-
-```shell
-$ git clone https://github.com/aksalj/meansfw.git <myApp>
-$ cd <myApp>
-$ npm install && bower install
-```
-
 #### Structure
 
 ###### app

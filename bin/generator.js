@@ -36,11 +36,15 @@ function updateTemplate(name, dest) {
     pkgJSON.version = "0.0.0";
     pkgJSON.description = "MEAN app";
     pkgJSON.keywords = [name, "meansfw"];
+    pkgJSON.author = process.env.USER;
 
         // Delete generator dependencies & stuff
     delete pkgJSON.bin;
     delete pkgJSON.files;
     delete pkgJSON.preferGlobal;
+    delete pkgJSON.homepage;
+    delete pkgJSON.repository;
+    delete pkgJSON.bugs;
     generatorDependencies.forEach(function(dep) {
         if(pkgJSON.dependencies.hasOwnProperty(dep)) {
             delete pkgJSON.dependencies[dep];
@@ -56,6 +60,7 @@ function updateTemplate(name, dest) {
     cli.progress(0.5);
     bowerJSON.name = name;
     bowerJSON.description = "MEAN app";
+    bowerJSON.author = process.env.USER;
     fs.writeJsonSync(path.join(dest, "bower.json"), bowerJSON);
     cli.progress(0.6);
 
