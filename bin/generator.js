@@ -20,6 +20,29 @@ var REPO = "https://github.com/aksalj/meansfw.git";
 
 var generatorDependencies = ["cli", "fs-extra"];
 
+function checkPrerequisites(callback) {
+    cli.info("Checking prerequisites...");
+
+    // Check if the binaries exist by checking their versions.
+    // HUH: Is there a cleaner/better way?
+
+    cli.exec("git --version", function(stdout) {
+        cli.ok(stdout);
+        cli.exec("bower -v", function(stdout) {
+            cli.ok("bower " + stdout);
+            setTimeout(callback, 1000);
+        }, function(err) {
+            var cmd = '\x1B[36m\'sudo npm install -g bower\'\x1B[0m';
+            cli.error("Bower not found; Please install by running " + cmd);
+        });
+
+    }, function(err) {
+        var url = '\x1B[32m\'https://git-scm.com/downloads\'\x1B[0m';
+        cli.error("Git not found; Please install from " + url);
+    });
+
+}
+
 function downloadTemplate(dest, callback) {
     cli.info("Downloading template...");
     var cmd = "git clone " + REPO + " " + dest;
@@ -38,15 +61,15 @@ function updateTemplate(name, dest) {
     pkgJSON.keywords = [name, "meansfw"];
     pkgJSON.author = process.env.USER;
 
-        // Delete generator dependencies & stuff
+    // Delete generator dependencies & stuff
     delete pkgJSON.bin;
     delete pkgJSON.files;
     delete pkgJSON.preferGlobal;
     delete pkgJSON.homepage;
     delete pkgJSON.repository;
     delete pkgJSON.bugs;
-    generatorDependencies.forEach(function(dep) {
-        if(pkgJSON.dependencies.hasOwnProperty(dep)) {
+    generatorDependencies.forEach(function (dep) {
+        if (pkgJSON.dependencies.hasOwnProperty(dep)) {
             delete pkgJSON.dependencies[dep];
         }
     });
@@ -91,7 +114,7 @@ cli.parse({
     verbose: ["v", "verbose"]
 });
 
-cli.main(function(args, options) {
+cli.main(function (args, options) {
 
     // TODO:
     // Clone https://github.com/aksalj/meansfw.git into <myApp>
@@ -104,43 +127,47 @@ cli.main(function(args, options) {
         return cli.error("Invalid number of arguments");
     }
 
-    cli.spinner('Working...');
-    cli.progress(0.0);
+    var generate = function () {
+        cli.spinner('Working...');
+        cli.progress(0.0);
 
-    var VERBOSE = options.verbose;
-    var app = args[args.length - 1]; // Last arg should be app name
-    var dest = path.join(process.cwd(), app);
-    cli.ok("App Name: " + app);
-    cli.ok("App folder: " + dest);
+        var VERBOSE = options.verbose;
+        var app = args[args.length - 1]; // Last arg should be app name
+        var dest = path.join(process.cwd(), app);
+        cli.ok("App Name: " + app);
+        cli.ok("App folder: " + dest);
 
-    cli.info("Checking app folder...");
-    fs.remove(dest, function(err) { // Clear destination
-        if (err) return cli.error(err);
+        cli.info("Checking app folder...");
+        fs.remove(dest, function (err) { // Clear destination
+            if (err) return cli.error(err);
 
-        downloadTemplate(dest, function(err, stdout) {
-            // FIXME: Need to check error!!
-            if (VERBOSE) {
-                console.info(err);
-                console.info(stdout);
-            }
-
-            cli.progress(0.2);
-
-            updateTemplate(app, dest);
-
-            installDependencies(app, function(err, stdout) {
+            downloadTemplate(dest, function (err, stdout) {
                 // FIXME: Need to check error!!
                 if (VERBOSE) {
                     console.info(err);
                     console.info(stdout);
                 }
 
-                cli.progress(1.0);
-                cli.spinner('Done!', true); //End the spinner
+                cli.progress(0.2);
+
+                updateTemplate(app, dest);
+
+                installDependencies(app, function (err, stdout) {
+                    // FIXME: Need to check error!!
+                    if (VERBOSE) {
+                        console.info(err);
+                        console.info(stdout);
+                    }
+
+                    cli.progress(1.0);
+                    cli.spinner('Done!', true); //End the spinner
+                });
+
             });
 
         });
+    }
 
-    });
+    checkPrerequisites(generate);
 
 });

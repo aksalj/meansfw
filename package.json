@@ -1,6 +1,6 @@
 {
     "name": "meansfw",
-    "version": "0.0.1d",
+    "version": "0.0.1e",
     "description": "MEAN Project Template Generator",
     "main": "app/index.js",
     "bin" : {
