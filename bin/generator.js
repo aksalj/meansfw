@@ -30,7 +30,7 @@ function checkPrerequisites(callback) {
         cli.ok(stdout);
         cli.exec("bower -v", function(stdout) {
             cli.ok("bower " + stdout);
-            setTimeout(callback, 1000);
+            setTimeout(callback, 500);
         }, function(err) {
             var cmd = '\x1B[36m\'sudo npm install -g bower\'\x1B[0m';
             cli.error("Bower not found; Please install by running " + cmd);
@@ -94,6 +94,10 @@ function updateTemplate(name, dest) {
     fs.writeJsonSync(path.join(dest, "config/default.json"), defaultJSON);
     cli.progress(0.8);
 
+    // Update README.md
+    fs.outputFileSync(path.join(dest, "README.md"), "# " + name + ": " + pkgJSON.description);
+    cli.progress(0.85);
+
 }
 
 function installDependencies(dest, callback) {
@@ -110,8 +114,10 @@ function installDependencies(dest, callback) {
     cli.exec(cmd, callback, callback);
 }
 
+cli.setUsage(cli.app + " [OPTIONS] <myApp>");
+
 cli.parse({
-    verbose: ["v", "verbose"]
+    verbose: ["v", "Display all commands output"]
 });
 
 cli.main(function (args, options) {
@@ -124,7 +130,7 @@ cli.main(function (args, options) {
     // npm install && bower install
 
     if (args.length === 0) {
-        return cli.error("Invalid number of arguments");
+        return cli.getUsage(1);
     }
 
     var generate = function () {
@@ -166,7 +172,7 @@ cli.main(function (args, options) {
             });
 
         });
-    }
+    };
 
     checkPrerequisites(generate);
 
