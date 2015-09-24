@@ -12,7 +12,7 @@
  */
 'use strict';
 var conf = require("config");
-var fs = require("fs");
+var fs = require("fs-extra");
 var morgan = require('morgan');
 var debug = require('debug')('app');
 var express = require("express");
@@ -28,7 +28,9 @@ var app = express();
 if(DEBUG) { app.use(morgan('dev')); }
 else {
     // In production, log access to file
-    var accessLogStream = fs.createWriteStream(process.cwd() + '/log/access.log', {flags: 'a'});
+    var logDir = process.cwd() + "/log/";
+    fs.mkdirpSync(logDir);
+    var accessLogStream = fs.createWriteStream(logDir + 'access.log', {flags: 'a'});
     app.use(morgan('combined', {stream: accessLogStream}));
 }
 
@@ -36,12 +38,13 @@ else {
 app.set('view engine', 'ejs');
 app.set('views', 'app/views');
 
-    // Static files
-app.use(express.static('public'));
-
-// Setup Routes
+    // Setup Routes
 routes.forEach(function(route) {
     app.use(route.path, route.router);
 });
+
+    // Static files
+app.use(express.static('public'));
+
 
 exports = module.exports = app;
