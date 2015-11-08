@@ -22,7 +22,7 @@ var http = require('http');
 
 
 /**
- * Simple wrappler around express and mongoose
+ * Simple wrapper around express and mongoose
  * @param app Object express app
  * @constructor
  */
